@@ -48,3 +48,6 @@ chrome.runtime.onInstalled.addListener(() => {
 ```
 
 This extension will need information from a persistent variable as soon as it's installed. Start by including a listening event for **runtime.onInstalled** in the background script. Inside the onInstalled listener, the extension will set a value using the **storage** API. This will allow multiple extension components to access that value and update it. 
+
+### Add the storage permission
+Most APIs must be registered under the "permissions" field in the manifest for the extension to use them, such as **storage** API.
