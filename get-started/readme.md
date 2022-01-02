@@ -51,3 +51,12 @@ This extension will need information from a persistent variable as soon as it's 
 
 ### Add the storage permission
 Most APIs must be registered under the "permissions" field in the manifest for the extension to use them, such as **storage** API.
+
+## Import the extension
+Follow the below steps to add the extension whose directory holding a manifest file in developer mode in its current state: 
+1. Open the **Extension Management(套件管理員)** page by navigating to **chrome://extensions**.
+2. Enable Developer Mode by clicking the toggle switch next to **Developer mode(開發人員模式)**.
+3. Click the **Load unpacked(載入解壓縮)** button and select the extension directory.
+4. A new field, **Inspect views**, becomes available with a blue link, **service worker**.
+5. Click the link to view the background script's console log which prints "Default background color set to green".
+6. 
