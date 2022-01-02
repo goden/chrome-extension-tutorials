@@ -32,3 +32,19 @@ Background scripts must be registered in the manifest. Registering a background 
 ```
 
 Chrome is aware that the extension includes a service worker. When the extension is reloaded, Chrome will scan the specified file for additional instructions, such as important events it needs to listen for.
+
+### Create the background script
+Create a new file named **background.js** and add the following code.
+
+```javascript
+// background.js
+
+let color = '#3aa757';
+
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.storage.sync.set({ color });
+  console.log('Change the default background color to %cgreen', `color: ${color}`);
+});
+```
+
+This extension will need information from a persistent variable as soon as it's installed. Start by including a listening event for **runtime.onInstalled** in the background script. Inside the onInstalled listener, the extension will set a value using the **storage** API. This will allow multiple extension components to access that value and update it. 
