@@ -59,4 +59,106 @@ Follow the below steps to add the extension whose directory holding a manifest f
 3. Click the **Load unpacked(載入解壓縮)** button and select the extension directory.
 4. A new field, **Inspect views**, becomes available with a blue link, **service worker**.
 5. Click the link to view the background script's console log which prints "Default background color set to green".
-6. 
+
+## Introduce a user interface
+In this case to use a popup as the user interface. Create and add a file named **popup.html** which uses a button to change the background color.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="button.css">
+  </head>
+  <body>
+    <button id="changeColor"></button>
+  </body>
+</html>
+```
+
+This popup's HTML references an external CSS file named **button.css**. Add another file then name it appropriately, and add the following code.
+```css
+button {
+  height: 30px;
+  width: 30px;
+  outline: none;
+  margin: 10px;
+  border: none;
+  border-radius: 2px;
+}
+
+button.current {
+  box-shadow: 0 0 0 2px white,
+              0 0 0 4px black;
+}
+```
+
+Add an action object to the manifest and set **popup.html** as the action's **default_popup** in the manifest for Chrome to present it in the extension's popup.
+
+```json
+{
+  "name": "Getting Started Example",
+  "description": "Build an Extension!",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
+```
+
+Designation for toolbar icons is also included under **action** in the **default_icons** field. Update the manifest for the extension how to use the images.
+```json
+{
+  "name": "Getting Started Example",
+  "description": "Build an Extension!",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/asserts/get_started16.png",
+      "32": "/asserts/get_started32.png",
+      "48": "/asserts/get_started48.png",
+      "128": "/asserts/get_started128.png"
+    }
+  }
+}
+```
+Extensions also display images on the extension management page, the permissions warning, and favicon. These images are designated in the manifest under **icons**.
+```json
+{
+  "name": "Getting Started Example",
+  "description": "Build an Extension!",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/asserts/get_started16.png",
+      "32": "/asserts/get_started32.png",
+      "48": "/asserts/get_started48.png",
+      "128": "/asserts/get_started128.png"
+    }
+  },
+  "icons": {
+    "16": "/asserts/get_started16.png",
+    "32": "/asserts/get_started32.png",
+    "48": "/asserts/get_started48.png",
+    "128": "/asserts/get_started128.png"
+  }
+}
+```
+
+Try to reload the extension to make sure that the settings will be taken effect.

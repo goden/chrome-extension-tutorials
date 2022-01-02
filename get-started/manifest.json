@@ -6,5 +6,20 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["storage"]
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/asserts/get_started16.png",
+      "32": "/asserts/get_started32.png",
+      "48": "/asserts/get_started48.png",
+      "128": "/asserts/get_started128.png"
+    }
+  },
+  "icons": {
+    "16": "/asserts/get_started16.png",
+    "32": "/asserts/get_started32.png",
+    "48": "/asserts/get_started48.png",
+    "128": "/asserts/get_started128.png"
+  }
 }
