@@ -186,3 +186,40 @@ This code grabs the button from popup.html and requests the color value from sto
   </body>
 </html>
 ```
+
+## Layer logic
+The extension now has a custom icon and a popup, and it colors the popup button based on a value saved to the extension's storage. 
+Next for further user interaction. Update popup.js by adding the following to the end of the file.
+
+```javascript
+// When the button is clicked, inject setPageBackgroundColor into current page
+changeColor.addEventListener("click", async () => {
+  let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+  chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    function: setPageBackgroundColor,
+  });
+});
+
+// The body of this function will be executed as a content script inside the
+// current page
+function setPageBackgroundColor() {
+  chrome.storage.sync.get("color", ({ color }) => {
+    document.body.style.backgroundColor = color;
+  });
+}
+```
+
+The updated code adds a click event listener to the button, which triggers a programmatically injected content script. This turns the background color of the page the same color as the button. Using programmatic injection allows for user-invoked content scripts, instead of auto inserting unwanted code into web pages.
+
+The manifest will need the **activeTab** permission to allow the extension temporary access to the current page, and the **scripting** permission to use the Scripting API's executeScript method.
+
+```json
+{
+  "name": "Getting Started Example",
+  ...
+  "permissions": ["storage", "activeTab", "scripting"],
+  ...
+}
+```
