@@ -223,3 +223,87 @@ The manifest will need the **activeTab** permission to allow the extension tempo
   ...
 }
 ```
+
+## Give users options
+The extension currently only allows to set the background to green. Let's start by creating a file named **options.html** and include the following code.. 
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="button.css">
+  </head>
+  <body>
+    <div id="buttonDiv">
+    </div>
+    <div>
+      <p>Choose a different background color!</p>
+    </div>
+  </body>
+  <script src="options.js"></script>
+</html>
+```
+
+And then place the options page in the manifest.
+```json
+{
+    "name": "Getting Started Example",
+    ...
+    "options_page": "options.html"
+  }
+```
+
+Reload the extension, right-click the extension icon in the toolbar and then select **Options**. 
+
+![The Options of the extension.](images/image1.png)
+
+The last step is to add the options logic. Create a file named **options.js**  with the following code.
+```javascript
+let page = document.getElementById("buttonDiv");
+let selectedClassName = "current";
+const presetButtonColors = ["#3aa757", "#e8453c", "#f9bb2d", "#4688f1"];
+
+// Reacts to a button click by marking the selected button and saving
+// the selection
+function handleButtonClick(event) {
+  // Remove styling from the previously selected color
+  let current = event.target.parentElement.querySelector(
+    `.${selectedClassName}`
+  );
+  if (current && current !== event.target) {
+    current.classList.remove(selectedClassName);
+  }
+
+  // Mark the button as selected
+  let color = event.target.dataset.color;
+  event.target.classList.add(selectedClassName);
+  chrome.storage.sync.set({ color });
+}
+
+// Add a button to the page for each supplied color
+function constructOptions(buttonColors) {
+  chrome.storage.sync.get("color", (data) => {
+    let currentColor = data.color;
+    // For each color we were provided…
+    for (let buttonColor of buttonColors) {
+      // …create a button with that color…
+      let button = document.createElement("button");
+      button.dataset.color = buttonColor;
+      button.style.backgroundColor = buttonColor;
+
+      // …mark the currently selected color…
+      if (buttonColor === currentColor) {
+        button.classList.add(selectedClassName);
+      }
+
+      // …and register a listener for when that button is clicked
+      button.addEventListener("click", handleButtonClick);
+      page.appendChild(button);
+    }
+  });
+}
+
+// Initialize the page by constructing the color options
+constructOptions(presetButtonColors);
+```
+The options.html provides 4 different background colors. When the button is clicked, the extension storage will be updated.
