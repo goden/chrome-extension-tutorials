@@ -306,4 +306,4 @@ function constructOptions(buttonColors) {
 // Initialize the page by constructing the color options
 constructOptions(presetButtonColors);
 ```
-The options.html provides 4 different background colors. When the button is clicked, the extension storage will be updated.
+The **options.html** provides 4 different background colors. When the button is clicked, the extension storage will be updated.
