@@ -5,6 +5,6 @@ Google chrome extensions are the small software programs that improve the browse
 
 ## Samples
 Samples logs what I learn and how to implement during the tuturial. The directry structure goes as belows:
-- [Get Started](/get-started/readme.md) - The first google chrome extension.
-- [Hello World](/hello-world/readme.md) - Get a DOM content to replace the current page at loading.
+- [Get Started](/get-started/) - The first google chrome extension.
+- [Hello World](/hello-world/) - Get a DOM content to replace the current page at loading.
 - [Page Radder](/page-radder/) - Skip.
